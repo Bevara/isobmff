@@ -33,6 +33,9 @@ jobs:
         echo "TAG_NAME=$(awk -F'[()]' '/add_filter/{print $2}' CMakeLists.txt | awk '{print $1}')" >> $GITHUB_OUTPUT
       id: version
 
+    - name: Rename description file for release
+      run: cp ${{ steps.version.outputs.TAG_NAME }}.json ${{ steps.version.outputs.TAG_NAME }}_${{env.TAG_NUMBER}}.json
+          
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
@@ -40,5 +43,5 @@ jobs:
         token : ${{ secrets.RELEASE_TOKEN }}
         files: |
           build/${{ steps.version.outputs.TAG_NAME }}_${{env.TAG_NUMBER}}.wasm,
-          ${{ steps.version.outputs.TAG_NAME }}.json
+          ${{ steps.version.outputs.TAG_NAME }}_${{env.TAG_NUMBER}}.json
 

@@ -40,5 +40,5 @@ jobs:
         token : ${{ secrets.RELEASE_TOKEN }}
         files: |
           build/${{ steps.version.outputs.TAG_NAME }}_${{env.TAG_NUMBER}}.wasm,
-          ${{ steps.version.outputs.TAG_NAME }}.json#${{ steps.version.outputs.TAG_NAME }}_${{env.TAG_NUMBER}}.json
+          ${{ steps.version.outputs.TAG_NAME }}.json
 

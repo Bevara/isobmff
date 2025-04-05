@@ -3791,7 +3791,7 @@ typedef struct
 	GF_FilterSession *fsess;
 } FragCallback;
 
-extern char gf_prog_lf;
+char gf_prog_lf = '\r';
 
 static Bool on_frag_event(void *_udta, GF_Event *evt)
 {

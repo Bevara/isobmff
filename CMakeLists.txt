@@ -5,7 +5,15 @@ include(filters.cmake)
 
 add_definitions(-fpic)
 
+set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_CXX_FLAGS "-O3 -Wall -Wextra")
+set(CMAKE_C_FLAGS "-O3 -Wall -Wextra")
+
 SET(ISOBMFF_SRC
+        ${CMAKE_CURRENT_SOURCE_DIR}/bitstream.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/movie_fragments.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/drm_sample.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/isom_write.c
         ${CMAKE_CURRENT_SOURCE_DIR}/isoffin_read.c
         ${CMAKE_CURRENT_SOURCE_DIR}/isoffin_load.c
         ${CMAKE_CURRENT_SOURCE_DIR}/isoffin_read_ch.c

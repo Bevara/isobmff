@@ -10,6 +10,7 @@ set(CMAKE_CXX_FLAGS "-O3 -Wall -Wextra")
 set(CMAKE_C_FLAGS "-O3 -Wall -Wextra")
 
 SET(ISOBMFF_SRC
+        ${CMAKE_CURRENT_SOURCE_DIR}/av_parsers.c
         ${CMAKE_CURRENT_SOURCE_DIR}/bitstream.c
         ${CMAKE_CURRENT_SOURCE_DIR}/movie_fragments.c
         ${CMAKE_CURRENT_SOURCE_DIR}/drm_sample.c
@@ -19,6 +20,7 @@ SET(ISOBMFF_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/isoffin_read_ch.c
         ${CMAKE_CURRENT_SOURCE_DIR}/isom_tools.c
         ${CMAKE_CURRENT_SOURCE_DIR}/mux_isom.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/mux_ts.c
         ${CMAKE_CURRENT_SOURCE_DIR}/isom_read.c
         ${CMAKE_CURRENT_SOURCE_DIR}/isom_store.c
         ${CMAKE_CURRENT_SOURCE_DIR}/box_funcs.c
@@ -31,6 +33,7 @@ SET(ISOBMFF_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/box_code_apple.c
         ${CMAKE_CURRENT_SOURCE_DIR}/box_code_adobe.c
         ${CMAKE_CURRENT_SOURCE_DIR}/isom_intern.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/media_import.c
         ${CMAKE_CURRENT_SOURCE_DIR}/data_map.c
         ${CMAKE_CURRENT_SOURCE_DIR}/iff.c
         ${CMAKE_CURRENT_SOURCE_DIR}/meta.c
@@ -38,7 +41,10 @@ SET(ISOBMFF_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/track.c
         ${CMAKE_CURRENT_SOURCE_DIR}/media.c
         ${CMAKE_CURRENT_SOURCE_DIR}/stbl_read.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/stbl_write.c
         ${CMAKE_CURRENT_SOURCE_DIR}/webvtt.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/reframe_nalu.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/media_odf.c
 )
 
 SET(ISOBMFF_INC

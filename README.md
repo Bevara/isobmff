@@ -1,3 +1,4 @@
+# isobmff
 This filter multiplexes and demultiplexes ISOBMF (14496-12 and derived specifications).
 
 
@@ -39,7 +40,7 @@ emcmake cmake .
 emmake make
 ```
 
-Once built, you can use and distribute libjxl_1.wasm with your universal tags.
+Once built, you can use and distribute isobmff_1.wasm with your universal tags.
 
 ## Documentation
 

@@ -1855,3 +1855,9 @@ const GF_FilterRegister *dynCall_mp4dmx_register(GF_FilterSession *session)
 	return NULL;
 }
 #endif // !defined(GPAC_DISABLE_ISOM) && !defined(GPAC_DISABLE_MP4DMX)
+
+#include "filter_register.h"
+__attribute__((constructor))
+void register_mp4dmx(void) {
+    gf_filter_auto_register("mp4dmx", dynCall_mp4dmx_register);
+}

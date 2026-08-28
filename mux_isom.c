@@ -8414,3 +8414,9 @@ const GF_FilterRegister *dynCall_mp4_mux_register(GF_FilterSession *session)
 	return NULL;
 }
 #endif // GPAC_DISABLE_ISOM_WRITE
+
+#include "filter_register.h"
+__attribute__((constructor))
+void register_mp4_mux(void) {
+    gf_filter_auto_register("mp4_mux", dynCall_mp4_mux_register);
+}

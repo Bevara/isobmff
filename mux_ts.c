@@ -2191,3 +2191,9 @@ const GF_FilterRegister *dynCall_tsmux_register(GF_FilterSession *session)
 }
 
 #endif /*GPAC_DISABLE_MPEG2TS_MUX*/
+
+#include "filter_register.h"
+__attribute__((constructor))
+void register_tsmux(void) {
+    gf_filter_auto_register("tsmux", dynCall_tsmux_register);
+}

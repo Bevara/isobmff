@@ -4337,3 +4337,9 @@ const GF_FilterRegister *dynCall_naludmx_register(GF_FilterSession *session)
 	return NULL;
 }
 #endif //#if !defined(GPAC_DISABLE_AV_PARSERS) && !defined(GPAC_DISABLE_RFNALU)
+
+#include "filter_register.h"
+__attribute__((constructor))
+void register_naludmx(void) {
+    gf_filter_auto_register("naludmx", dynCall_naludmx_register);
+}

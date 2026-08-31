@@ -12416,8 +12416,12 @@ GF_Err dOps_box_write(GF_Box *s, GF_BitStream *bs)
 	if (!s) return GF_BAD_PARAM;
 	e = gf_isom_box_write_header(s, bs);
 	if (e) return e;
-	//we always write 0 - the version may also be set to 1 when fed from ffenc or opus+ogg
-	gf_bs_write_u8(bs, /*ptr->opcfg.version*/ 0);
+	/* Write the actual version (should be 1 per the Opus-in-ISOBMFF spec).
+	 * Chrome's MSE ChunkDemuxer strictly rejects version=0 with
+	 * "RunSegmentParserLoop: stream parsing failed" even though regular
+	 * (non-MSE) playback tolerates it - progressive/MSE playback needs
+	 * the spec-compliant value here. */
+	gf_bs_write_u8(bs, ptr->opcfg.version);
 	gf_bs_write_u8(bs, ptr->opcfg.OutputChannelCount);
 	gf_bs_write_u16(bs, ptr->opcfg.PreSkip);
 	gf_bs_write_u32(bs, ptr->opcfg.InputSampleRate);

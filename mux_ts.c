@@ -2178,14 +2178,14 @@ GF_FilterRegister TSMuxRegister = {
 };
 
 
-const GF_FilterRegister * EMSCRIPTEN_KEEPALIVE dynCall_tsmux_register(GF_FilterSession *session)
+const GF_FilterRegister * EMSCRIPTEN_KEEPALIVE tsmux_register(GF_FilterSession *session)
 {
 	return &TSMuxRegister;
 }
 
 #else
 
-const GF_FilterRegister *dynCall_tsmux_register(GF_FilterSession *session)
+const GF_FilterRegister *tsmux_register(GF_FilterSession *session)
 {
 	return NULL;
 }
@@ -2195,5 +2195,5 @@ const GF_FilterRegister *dynCall_tsmux_register(GF_FilterSession *session)
 #include "filter_register.h"
 __attribute__((constructor))
 void register_tsmux(void) {
-    gf_filter_auto_register("tsmux", dynCall_tsmux_register);
+    gf_filter_auto_register("tsmux", tsmux_register);
 }

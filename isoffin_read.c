@@ -1845,12 +1845,12 @@ GF_FilterRegister ISOFFInRegister = {
 	.probe_data = isoffin_probe_data
 };
 
-const GF_FilterRegister * EMSCRIPTEN_KEEPALIVE dynCall_mp4dmx_register(GF_FilterSession *session)
+const GF_FilterRegister * EMSCRIPTEN_KEEPALIVE mp4dmx_register(GF_FilterSession *session)
 {
 	return &ISOFFInRegister;
 }
 #else
-const GF_FilterRegister *dynCall_mp4dmx_register(GF_FilterSession *session)
+const GF_FilterRegister *mp4dmx_register(GF_FilterSession *session)
 {
 	return NULL;
 }
@@ -1859,5 +1859,5 @@ const GF_FilterRegister *dynCall_mp4dmx_register(GF_FilterSession *session)
 #include "filter_register.h"
 __attribute__((constructor))
 void register_mp4dmx(void) {
-    gf_filter_auto_register("mp4dmx", dynCall_mp4dmx_register);
+    gf_filter_auto_register("mp4dmx", mp4dmx_register);
 }

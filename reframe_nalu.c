@@ -4327,12 +4327,12 @@ GF_FilterRegister NALUDmxRegister = {
 };
 
 
-const GF_FilterRegister * EMSCRIPTEN_KEEPALIVE dynCall_naludmx_register(GF_FilterSession *session)
+const GF_FilterRegister * EMSCRIPTEN_KEEPALIVE naludmx_register(GF_FilterSession *session)
 {
 	return &NALUDmxRegister;
 }
 #else
-const GF_FilterRegister *dynCall_naludmx_register(GF_FilterSession *session)
+const GF_FilterRegister *naludmx_register(GF_FilterSession *session)
 {
 	return NULL;
 }
@@ -4341,5 +4341,5 @@ const GF_FilterRegister *dynCall_naludmx_register(GF_FilterSession *session)
 #include "filter_register.h"
 __attribute__((constructor))
 void register_naludmx(void) {
-    gf_filter_auto_register("naludmx", dynCall_naludmx_register);
+    gf_filter_auto_register("naludmx", naludmx_register);
 }

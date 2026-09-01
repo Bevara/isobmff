@@ -8404,12 +8404,12 @@ GF_FilterRegister MP4MuxRegister = {
 };
 
 
-const GF_FilterRegister * EMSCRIPTEN_KEEPALIVE dynCall_mp4_mux_register(GF_FilterSession *session)
+const GF_FilterRegister * EMSCRIPTEN_KEEPALIVE mp4_mux_register(GF_FilterSession *session)
 {
 	return &MP4MuxRegister;
 }
 #else
-const GF_FilterRegister *dynCall_mp4_mux_register(GF_FilterSession *session)
+const GF_FilterRegister *mp4_mux_register(GF_FilterSession *session)
 {
 	return NULL;
 }
@@ -8418,5 +8418,5 @@ const GF_FilterRegister *dynCall_mp4_mux_register(GF_FilterSession *session)
 #include "filter_register.h"
 __attribute__((constructor))
 void register_mp4_mux(void) {
-    gf_filter_auto_register("mp4_mux", dynCall_mp4_mux_register);
+    gf_filter_auto_register("mp4_mux", mp4_mux_register);
 }

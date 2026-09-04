@@ -2,7 +2,7 @@
  *			GPAC - Multimedia Framework C SDK
  *
  *			Authors: Jean Le Feuvre
- *			Copyright (c) Telecom ParisTech 2000-2024
+ *			Copyright (c) Telecom ParisTech 2000-2026
  *					All rights reserved
  *
  *  This file is part of GPAC / ISOBMFF reader filter
@@ -27,9 +27,8 @@
 #ifndef _ISMO_IN_H_
 #define _ISMO_IN_H_
 
-#include "isomedia.h"
-
 #include <gpac/constants.h>
+#include <gpac/isomedia.h>
 #include <gpac/filters.h>
 #include <gpac/thread.h>
 
@@ -42,38 +41,46 @@
 
 //#define DASH_USE_PULL
 
-enum
-{
+GF_OPT_ENUM (ISOMReaderScalableTileLoadMode,
 	MP4DMX_SPLIT=0,
 	MP4DMX_SPLIT_EXTRACTORS,
 	MP4DMX_SINGLE,
-};
+);
 
-enum
-{
+GF_OPT_ENUM (ISOMReaderParamSetsExtractMode,
 	MP4DMX_XPS_AUTO=0,
 	MP4DMX_XPS_KEEP,
 	MP4DMX_XPS_REMOVE,
-};
+);
+
+GF_OPT_ENUM (ISOMReaderEditListMode,
+	EDITS_AUTO=0,
+	EDITS_NO,
+	EDITS_STRICT,
+);
 
 typedef struct
 {
 	//options
 	char *src, *initseg;
 	Bool allt, itt, itemid;
-	u32 smode, edits;
+	ISOMReaderScalableTileLoadMode smode;
+	ISOMReaderEditListMode edits;
 	u32 stsd;
 	Bool expart;
-	Bool alltk;
+	Bool alltk, keepc;
 	u32 frame_size;
 	char* tkid;
-	Bool analyze;
-	u32 xps_check;
+	u32 analyze;
+	Bool norw;
+	ISOMReaderParamSetsExtractMode xps_check;
 	char *catseg;
-	Bool sigfrag;
+	char *drefu;
+	Bool sigfrag, sigfo;
 	Bool nocrypt, strtxt, lightp;
 	u32 nodata;
 	u32 mstore_purge, mstore_samples, mstore_size;
+	s32 ctso;
 
 	//internal
 
@@ -92,6 +99,7 @@ typedef struct
 	//fragmented file to be refreshed before processing it
 	Bool refresh_fragmented;
 	Bool input_is_stop;
+	Bool was_aborted;
 	u64 missing_bytes, last_size;
 
 	Bool seg_name_changed;
@@ -110,10 +118,11 @@ typedef struct
 	u32 has_pending_segments, nb_force_flush;
 
 	Bool disconnected;
+	Bool in_is_eos;
 	Bool no_order_check;
 	u32 moov_not_loaded;
     Bool invalid_segment;
-
+    
 	u64 last_sender_ntp, ntp_at_last_sender_ntp, cts_for_last_sender_ntp;
 	Bool is_partial_download, wait_for_source;
 
@@ -130,6 +139,11 @@ typedef struct
 	u64 last_min_offset;
 	GF_Err in_error;
 	Bool force_fetch;
+
+	u32 extkid, orig_id;
+	GF_ISOFile *extkmov;
+	u32 extk_flags;
+	Bool extk;
 } ISOMReader;
 
 typedef struct
@@ -148,11 +162,12 @@ typedef struct
 	GF_ISOSample *sample;
 	u64 sample_data_offset, last_valid_sample_data_offset;
 	GF_Err last_state;
-	Bool sap_3;
+	Bool sap_3, switch_frame;
 	GF_ISOSampleRollType sap_4_type;
 	s32 roll;
 	u32 xps_mask;
-
+	u32 cts_offset;
+	
 	u32 sample_num, sample_last;
 	s64 ts_offset;
 
@@ -198,7 +213,7 @@ typedef struct
 
 	u32 key_info_crc;
 	const GF_PropertyValue *cenc_ki;
-
+	
 	u8 *sai_buffer;
 	u32 sai_alloc_size, sai_buffer_size;
 

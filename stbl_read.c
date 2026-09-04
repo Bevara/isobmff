@@ -221,6 +221,8 @@ GF_Err stbl_GetSampleDTS_and_Duration(GF_TimeToSampleBox *stts, u32 SampleNumber
 
 	//no ent, this is really weird. Let's assume the DTS is then what is written in the table
 	if (!ent || (i == count)) {
+		if (SampleNumber>stts->r_FirstSampleInEntry)
+			return GF_ISOM_INVALID_FILE;
 		(*DTS) = stts->r_CurrentDTS;
 		if (duration) *duration = ent ? ent->sampleDelta : 0;
 	}
@@ -339,7 +341,7 @@ GF_Err stbl_SearchSAPs(GF_SampleTableBox *stbl, u32 SampleNumber, GF_ISOSAPType 
 				*prevRAP = first_rap_in_entry;
 			}
 			*nextRAP = last_rap_in_entry;
-			
+
 			/*sample lies in this (rap) group, it is rap*/
 			if (is_rap_group) {
 				if ((first_rap_in_entry <= SampleNumber) && (SampleNumber <= last_rap_in_entry)) {
@@ -409,7 +411,7 @@ GF_Err stbl_GetSampleInfos(GF_SampleTableBox *stbl, u32 sampleNumber, u64 *offse
 	(*chunkNumber) = (*descIndex) = 0;
 	if (out_ent) (*out_ent) = NULL;
 	if (!stbl || !sampleNumber) return GF_BAD_PARAM;
-	if (!stbl->ChunkOffset || !stbl->SampleToChunk || !stbl->SampleSize) return GF_ISOM_INVALID_FILE;
+	if (!stbl->ChunkOffset || !stbl->SampleToChunk || !stbl->SampleSize || !stbl->SampleToChunk->entries) return GF_ISOM_INVALID_FILE;
 
 	if (stbl->SampleSize && stbl->SampleToChunk->nb_entries == stbl->SampleSize->sampleCount) {
 		ent = &stbl->SampleToChunk->entries[sampleNumber-1];
@@ -417,7 +419,7 @@ GF_Err stbl_GetSampleInfos(GF_SampleTableBox *stbl, u32 sampleNumber, u64 *offse
 		(*descIndex) = ent->sampleDescriptionIndex;
 		(*chunkNumber) = sampleNumber;
 		if (out_ent) *out_ent = ent;
-		if ( stbl->ChunkOffset->type == GF_ISOM_BOX_TYPE_STCO) {
+		if (stbl->ChunkOffset->type == GF_ISOM_BOX_TYPE_STCO) {
 			stco = (GF_ChunkOffsetBox *)stbl->ChunkOffset;
 			if (!stco->offsets) return GF_ISOM_INVALID_FILE;
 			if (stco->nb_entries < sampleNumber) return GF_ISOM_INVALID_FILE;
@@ -456,9 +458,8 @@ GF_Err stbl_GetSampleInfos(GF_SampleTableBox *stbl, u32 sampleNumber, u64 *offse
 
 	//first get the chunk
 	for (; i < stbl->SampleToChunk->nb_entries; i++) {
-		gf_assert(stbl->SampleToChunk->firstSampleInCurrentChunk <= sampleNumber);
 		//corrupted file (less sample2chunk info than sample count
-		if (k > stbl->SampleToChunk->ghostNumber) {
+		if (stbl->SampleToChunk->firstSampleInCurrentChunk > sampleNumber || k > stbl->SampleToChunk->ghostNumber) {
 			return GF_ISOM_INVALID_FILE;
 		}
 
@@ -466,7 +467,7 @@ GF_Err stbl_GetSampleInfos(GF_SampleTableBox *stbl, u32 sampleNumber, u64 *offse
 		//check if sample is in current chunk
 		u32 max_chunks_in_entry = stbl->SampleToChunk->ghostNumber - k;
 		u32 nb_chunks_for_sample = sampleNumber - stbl->SampleToChunk->firstSampleInCurrentChunk;
-		if (ent->samplesPerChunk) 
+		if (ent->samplesPerChunk)
 			nb_chunks_for_sample /= ent->samplesPerChunk;
 
 		if (
@@ -503,7 +504,7 @@ sample_found:
 	if (out_ent) *out_ent = ent;
 	if (! *chunkNumber)
 		return GF_ISOM_INVALID_FILE;
-	
+
 	//ok, get the size of all the previous samples in the chunk
 	offsetInChunk = 0;
 	//constant size

@@ -16,6 +16,10 @@
     "licence_required":false,
     "extension":{
       "heif" : "img",
-      "heic" : "img"
-    }
+      "heic" : "img",
+      "mp4" : "video",
+      "m4a" : "audio",
+      "mov" : "video"
+    },
+    "Format": ["MPEG-4"]
 }

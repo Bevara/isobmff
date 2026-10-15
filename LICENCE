@@ -3,7 +3,7 @@ SPDX-License-Identifier: LGPL-2.1-or-later
 isobmff - ISOBMFF (ISO/IEC 14496-12) demultiplexer and multiplexer accessor
 
 The filter sources come from GPAC, Copyright (c) Telecom Paris, adapted by
-Bevara (Copyright (c) 2026 Bevara). The accessor statically links FFmpeg's
+Bevara Technologies, LLC (Copyright (c) 2026 Bevara Technologies, LLC). The accessor statically links FFmpeg's
 libavcodec, libavformat and libavutil (lib/), built without --enable-gpl or
 --enable-nonfree and therefore under the same licence.
 

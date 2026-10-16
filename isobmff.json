@@ -13,7 +13,6 @@
         "mp4dmx" : "isoffin_read.c",
         "mp4mx" : "mux_isom.c"
     },
-    "licence_required":false,
     "extension":{
       "heif" : "img",
       "heic" : "img",
@@ -22,5 +21,10 @@
       "mov" : "video"
     },
     "Format": ["MPEG-4"],
-    "using": ["solver_1"]
+    "using": ["solver_1"],
+    "patents": {
+        "status": "expired",
+        "note": "ISO base media file format (MPEG-4 Part 12/14)",
+        "checked": "2026-10-16"
+    }
 }

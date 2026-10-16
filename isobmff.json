@@ -1,5 +1,6 @@
 {
     "name": "isobmff",
+    "version": "1.0.1",
     "description": "ISOBMF demultiplexer/multiplexer",
     "filters":["mp4dmx","mp4mx"],
     "help": "This filter multiplexes and demultiplexes ISOBMF (14496-12 and derived specifications).",

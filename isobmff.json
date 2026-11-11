@@ -2,27 +2,38 @@
     "name": "isobmff",
     "version": "1.0.2",
     "description": "ISOBMF demultiplexer/multiplexer",
-    "filters":["mp4dmx","mp4mx"],
+    "filters": [
+        "mp4dmx",
+        "mp4mx"
+    ],
     "help": "This filter multiplexes and demultiplexes ISOBMF (14496-12 and derived specifications).",
     "support": [
         "image",
         "audio",
         "video"
     ],
-    "sources":"https://codeload.github.com/Bevara/isobmff/zip/refs/heads/main",
-    "filter_source":{
-        "mp4dmx" : "isoffin_read.c",
-        "mp4mx" : "mux_isom.c"
+    "sources": "https://codeload.github.com/Bevara/isobmff/zip/refs/heads/main",
+    "filter_source": {
+        "mp4dmx": "isoffin_read.c",
+        "mp4mx": "mux_isom.c"
     },
-    "extension":{
-      "heif" : "img",
-      "heic" : "img",
-      "mp4" : "video",
-      "m4a" : "audio",
-      "mov" : "video"
+    "extension": {
+        "heif": "img",
+        "heic": "img",
+        "mp4": "video",
+        "m4a": "audio",
+        "mov": "video"
     },
-    "Format": ["MPEG-4"],
-    "using": ["mm_solver_1.0.1", "mm_solver_1.0.2", "mm_solver_1.0.3", "mm_solver_1.0.4"],
+    "Format": [
+        "MPEG-4"
+    ],
+    "using": [
+        "mm_solver_1.0.1",
+        "mm_solver_1.0.2",
+        "mm_solver_1.0.3",
+        "mm_solver_1.0.4",
+        "mm_solver_1.0.5"
+    ],
     "patents": {
         "status": "expired",
         "note": "ISO base media file format (MPEG-4 Part 12/14)",
